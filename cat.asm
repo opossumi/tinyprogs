@@ -15,29 +15,28 @@ _start:
     pop     edi
     pop     edi
     mov     esi,    esp
-    inc     eax
-    push    eax
+_loop2:
+    lodsd
+    xchg    ecx,    eax
     jmp _loop
     dw      0x34
     dw      0x20
     dw      1
 
 _loop:
-    lodsd
-    test    eax,    eax
-    jz      _end
-    xor     ecx,    ecx
-    xchg    ebx,    eax
+    jecxz   _end
+    xchg    ebx,    ecx
     mov     al, 5
-    push    eax
-_end:
-    pop     eax
     int     0x80
 
     xchg    ecx,    eax
     xor     ebx,    ebx
     inc     ebx
-    mov     al,     187
+    mov     al,     186
+_end:
+    inc     eax
     int     0x80
+    dec     ebx
+    xor     ecx,    ecx
 
-    jmp _loop
+    jmp _loop2
