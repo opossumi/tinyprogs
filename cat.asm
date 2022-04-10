@@ -31,17 +31,14 @@ _loop:
     mov     ebx,    edi
     xor     ecx,    ecx
     lea     eax,    [ecx+5]
+    push    eax
+_end:
+    pop     eax
     int     0x80
     xchg    ecx,    eax
     xor     ebx,    ebx
     inc     ebx
-    xor     eax,    eax
     mov     al,     187
     int     0x80
     pop     ebx
     jmp     _loop
-
-_end:
-    pop     eax
-    pop     ebx
-    int     0x80
