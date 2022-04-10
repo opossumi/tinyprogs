@@ -21,9 +21,6 @@ _start:
     dw      0x34
     dw      0x20
     dw      1
-    dw      0
-    dw      0
-    dw      0
 
 _loop:
     mov     edi,    DWORD [esp + 4 * ebx]
