@@ -1,7 +1,7 @@
 ; tinycat by opossumi
 ; nasm -f bin cat.asm -o cat
 BITS 32
-org     0x08048000
+org     0x10000
     db  0x7F, "ELF"
     dd  1
     dd  0
@@ -12,33 +12,32 @@ org     0x08048000
     dd  _start
     dd  4
 _start:
-    dec     esi
-    push    ecx
-    mov     bl,     4
+    pop     edi
+    pop     edi
+    mov     esi,    esp
     inc     eax
     push    eax
-    jmp     _loop
+    jmp _loop
     dw      0x34
     dw      0x20
     dw      1
 
 _loop:
-    mov     edi,    DWORD [esp + 4 * ebx]
-    test    edi,    edi
+    lodsd
+    test    eax,    eax
     jz      _end
-    inc     ebx
-    push    ebx
-    mov     ebx,    edi
     xor     ecx,    ecx
-    lea     eax,    [ecx+5]
+    xchg    ebx,    eax
+    mov     al, 5
     push    eax
 _end:
     pop     eax
     int     0x80
+
     xchg    ecx,    eax
     xor     ebx,    ebx
     inc     ebx
     mov     al,     187
     int     0x80
-    pop     ebx
-    jmp     _loop
+
+    jmp _loop
