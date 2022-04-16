@@ -14,19 +14,19 @@ org     0x10000
 _start:
     pop     edi
     pop     edi
-    mov     esi,    esp
 _loop2:
-    lodsd
-    xchg    ecx,    eax
-    jmp _loop
+    pop     ecx
+    pusha
+    jecxz   _end
+    jmp     _loop
     dw      0x34
     dw      0x20
     dw      1
 
 _loop:
-    jecxz   _end
+    dec     esi
     xchg    ebx,    ecx
-    mov     al, 5
+    mov     al,     5
     int     0x80
 
     xchg    ecx,    eax
@@ -36,7 +36,5 @@ _loop:
 _end:
     inc     eax
     int     0x80
-    dec     ebx
-    xor     ecx,    ecx
-
-    jmp _loop2
+    popa
+    jmp     _loop2
